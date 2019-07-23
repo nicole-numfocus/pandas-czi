@@ -1,2 +1,2 @@
 proposal.pdf: proposal.md
-	pandoc proposal.md -o proposal.pdf
+	pandoc --filter=pandoc-citeproc proposal.md -o proposal.pdf
