@@ -3,9 +3,10 @@ title: Pandas
 bibliography: biblio.bib
 link-citations: true
 urlcolor: cyan
+numbersections: true
 ---
 
-## Goals
+# Goals
 
 We propose funding the continued maintenance and development of Pandas
 (@mckinney-proc-scipy-2010), a Python library providing high-performance,
@@ -16,23 +17,25 @@ the most widely-used data structure for heterogenous, tabular data, and is the
 most-used Python tag on StackOverflow (@robinson_2019). Pandas is widely used in
 industry and research, with over 1,000 citations (@Mueller2019).
 
-### Library Maintenance
+## Library Maintenance
 
 Pandas is a large library with many users. We have many open issues (about
 3,000) and Pull Requests (about 100). Keeping up with the stream of updates is
 time consuming, but important to the project. We would like to fund time
-dedicated specifically for maintenance. This would include
+dedicated specifically to maintenance. This would include
 
 1. Promptly triaging newly opened issues
 2. Promptly reviewing new pull requests
-3. Ensuring open issue conversations are progressing
+3. Ensuring conversations on open issues are progressing
 4. Ensuring that Pull Requests are not going stale and being abandoned
+5. Periodically the issue backlog to find and close issues that are
+   duplicates or no longer relevant
 
 By dedicating time specifically to maintenance we hope to reduce the open issue
-backlog and increase the growth rate of new contributors, as pandas becomes an
-easier project to contribute to.
+backlog. This should also make pandas easier to contribute to,
+hopefully increasing the growth rate of new contributors to the project.
 
-### Extension Types
+## Extension Types
 
 Pandas Extension Types allow for extending NumPy types with custom
 data types and array storage. Pandas uses extension types internally for several
@@ -55,7 +58,7 @@ missing values support can be a full replacement for the default numpy-based typ
 This work can also involve reaching out to external parties (such as Fletcher)
 to collaborate on refining their extension arrays.
 
-### Native String Data Type
+## Native String Data Type
 
 Currently, pandas stores text data in an ``object``-dtype NumPy array.
 Each array stores Python strings. While pragmatic, since we rely on NumPy
@@ -73,7 +76,9 @@ need to implement certain operations expected by pandas users (for example
 the algorithm used in, ``Series.str.upper``). That work may be done outside of
 pandas (possibly within Apache Arrow).
 
-### Documentation Validation
+
+
+## Documentation Validation
 
 To improve the quality and consistency of Pandas documentation, we've developed
 tooling to check docstrings in a variety of ways. Every docstring is checked for
@@ -100,7 +105,7 @@ project primarily requires experience with *using* pandas, NumPy, and related
 libraries, rather that deep knowledge of pandas' internals. Pandas has a diverse
 community, just not at the maintainer level (yet).
 
-### Performance Monitoring
+## Performance Monitoring
 
 Pandas uses [airspeed velocity](https://asv.readthedocs.io/en/stable/) to
 monitor for performance regressions. ASV itself is a fabulous tool, but requires
@@ -130,7 +135,9 @@ foundational libraries in the Scientific Python Ecosystem including xarray,
 Dask, scikit-image, scikit-learn, and PyMC3. Each of these projects would
 benefit from improvements made to the tooling.
 
-## Existing Support
+# Work plan
+
+# Existing Support
 
 Pandas currently has about two FTE.
 
@@ -146,7 +153,7 @@ An up-to-date list of current members and institutional
 parters can be found in our [governance
 documents](https://github.com/pandas-dev/pandas-governance/blob/master/people.md).
 
-## References
+# References
 
 [arrow]: https://arrow.apache.org
 [string ops]: https://pandas.pydata.org/pandas-docs/stable/reference/series.html#api-series-str
