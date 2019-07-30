@@ -39,7 +39,7 @@ data types and array storage. Pandas uses extension types internally for several
 type such as categorical, datetime with timezone and interval data, and provides
 an interface for 3rd-party libraries to define their own custom data types.
 
-Many parts of pandas still don't full handle such extension types, leading to
+Many parts of pandas still don't fully handle such extension types, leading to
 special cases in the code (hurting maintainability), places where the data
 is unintentionally converted to a NumPy array (with possible performance
 implications) and missing functionalities for those data types.
@@ -47,12 +47,12 @@ These problems are especially pronounced for nested data.
 
 We'd like to improve the handling of extension arrays throughout the library,
 making their behavior more consistent with the handling of NumPy arrays. We'll do this
-by cleaning up pandas' internals and adding new methods do the extension array interface.
-The goal is to better enable new extension type (such as a native string data type,
+by cleaning up pandas' internals and adding new methods to the extension array interface.
+The goal is to better enable new extension types (such as a native string data type,
 see below) and to ensure that the existing types such as the integer data type with
 missing values support can be a full replacement for the default numpy-based type.
 
-This work can also involve reaching out to external parties (such as fletcher)
+This work can also involve reaching out to external parties (such as Fletcher)
 to collaborate on refining their extension arrays.
 
 ### Native String Data Type
