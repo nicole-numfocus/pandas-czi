@@ -22,18 +22,13 @@ industry and research, with over 1,000 citations (@Mueller2019).
 Pandas is a large library with many users. We have many open issues (about
 3,000) and Pull Requests (about 100). Keeping up with the stream of updates is
 time consuming, but important to the project. We would like to fund time
-dedicated specifically to maintenance. This would include
-
-1. Promptly triaging newly opened issues
-2. Promptly reviewing new pull requests
-3. Ensuring conversations on open issues are progressing
-4. Ensuring that Pull Requests are not going stale and being abandoned
-5. Periodically the issue backlog to find and close issues that are
-   duplicates or no longer relevant
+dedicated specifically to maintenance.
 
 By dedicating time specifically to maintenance we hope to reduce the open issue
-backlog. This should also make pandas easier to contribute to,
-hopefully increasing the growth rate of new contributors to the project.
+backlog. This should also make pandas easier to contribute to, hopefully
+increasing the growth rate of new contributors to the project.
+
+We expect to see the number of open issues and pull requests decline. 
 
 ## Extension Types
 
@@ -60,23 +55,31 @@ to collaborate on refining their extension arrays.
 
 ## Native String Data Type
 
-Currently, pandas stores text data in an ``object``-dtype NumPy array.
-Each array stores Python strings. While pragmatic, since we rely on NumPy
-for storage and Python for string operations, this is memory inefficient
-and slow. We'd like to provide a native string type for pandas.
+Currently, pandas stores text data in an `object`-dtype NumPy array.
+The current implementation has two primary drawbacks:
 
-To solve the first issue, we propose a new extension type for string data. This
-will initially be opt-in, with users explicitly requesting ``dtype="string"``.
-The array backing this string dtype may initially be the current implementation:
-an ``object`` -dtype NumPy array of Python strings.
+1. `object`-dtype is not specific to strings: any Python object can be stored in
+   an `object`-dtype array, not just strings.
+2. Storing an array of Python strings as an `object`-dtype array is not memory
+   efficient. The NumPy memory model isn't especially well-suited to variable
+   width text data.
 
-To solve the second issue (performance), we'll explore alternative in-memory
-array libraries (for example, Apache Arrow). As part of the work, we may
-need to implement certain operations expected by pandas users (for example
-the algorithm used in, ``Series.str.upper``). That work may be done outside of
-pandas (possibly within Apache Arrow).
+To solve the first issue, we would like to implement a new [extension
+type](https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extension-types)
+for string data. This will initially be opt-in, with users explicitly requesting
+`dtype="string"`. Over time, we'd like to provide a migration path to users so
+that the string extension type is used by default for text data.
 
+To solve the second issue (memory efficiency), we'll explore alternative
+in-memory array libraries (for example, Apache Arrow). Using a library whose
+data model is better-suited to text data should result in lower memory usage
+when loaded into pandas. We also expect that operations (for example
+[`Series.str.upper`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.upper.html))
+will be faster.
 
+The second issue with pandas' current string implementation will be considered
+complete when a `string`-dtype array is no longer backed by a NumPy array of
+Python string objects.
 
 ## Documentation Validation
 
@@ -136,6 +139,37 @@ Dask, scikit-image, scikit-learn, and PyMC3. Each of these projects would
 benefit from improvements made to the tooling.
 
 # Work plan
+
+## Library Maintenance
+
+Maintainers funded by this grant would be expected to
+
+1. Promptly triage newly opened issues.
+2. Promptly review new pull requests.
+3. Ensure conversations on open issues are progressing and not waiting
+   on maintainer feedback.
+4. Ensure that Pull Requests are not going stale waiting for maintainer
+   feedback or contributor responses to feedback.
+5. Periodically review the issue backlog to find and close issues that are
+   duplicates or no longer relevant. We should ensure that open issues are
+   clearly described and scoped.
+
+## Native String Data Type
+
+The two aspects of this proposal (`string` extension type and an alternative
+in-memory array library) can largely proceed in parallel.
+
+We expect the string extension type to be the easier of the two tasks. Pandas'
+current extension array interface shouldn't require any modifications. The bulk
+of the work will be updating the existing documentation.
+
+Updating the string extension array to use an alternative in-memory array
+library will be a larger effort. First, we'll need to determine which array
+library to choose.
+
+If Apache Arrow is chosen, many string algorithms will need
+to be implemented, preferable in the Apache Arrow C++ library so that other
+languages binding to the C++ library benefit as well.
 
 # Existing Support
 
