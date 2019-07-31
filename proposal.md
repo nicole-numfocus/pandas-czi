@@ -15,8 +15,8 @@ abstract: |
   unique vistors per month.
   
   The proposal consists of library maintenance, improving the extension array
-  interface, a native extension type for text data, and documentation tooling
-  improvements.
+  interface, a native extension type for text data, and improvements to
+  pandas documentation and performance monitoring tooling.
 
 ---
 
