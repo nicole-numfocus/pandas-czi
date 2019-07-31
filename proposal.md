@@ -13,11 +13,11 @@ abstract: |
   for heterogenous, tabular data, and is the most-used Python tag on
   StackOverflow (@robinson_2019). Pandas documentation averages over 1,000,000
   unique vistors per month. Speficially within the biomedical and life sciences,
-  pandas is used by directly by researchers and libraries[^libraries].
+  pandas is used by directly by researchers and by libraries[^libraries].
   
-  The proposal consists of library maintenance, improving the extension array
-  interface, a native extension type for text data, and improvements to
-  Pandas documentation and performance monitoring tooling.
+  The proposal requests funding for library maintenance, improving the
+  extension array interface, a native extension type for text data,
+  and improvements to Pandas documentation and performance monitoring tooling.
 
 ---
 
@@ -34,32 +34,32 @@ We expect to see the number of open issues and pull requests decline while
 maintainers are dedicating additional time to maintenance.
 
 We also expect to increase the growth-rate of new contributors to the project.
-As maintenance time cleans up the issue backlog, the average quality of the
-outstanding open issues will rise. This will lower the barrier to contributing.
+As maintainers clean up the issue backlog the average quality of the outstanding
+open issues will rise. This will lower the barrier to contributing.
 
 See [Library Maintenance](#library-maintenance-1) for how we will achieve this
 goal.
 
 ## Extension Types
 
-Pandas Extension Array interface[^ea-interface] enables working with arrays of data that aren't
-limited to NumPy's data types and in-memory data model. Pandas provides several
-extension types (categorical, datetime with timezone, interval), and third-party
-libraries implementing the interface can define their own custom data types.
+Pandas Extension Array interface[^ea-interface] enables working with arrays of
+data that aren't limited to NumPy's data types and in-memory data model. Pandas
+provides several extension types (categorical, datetime with timezone,
+interval), and third-party libraries implementing the interface can define their
+own custom data types.
 
 Many parts of pandas still don't fully handle such extension types, leading to
 special cases in the code (hurting maintainability), places where the data
 is unintentionally converted to a NumPy array (with possible performance
-implications) and missing functionalities for those data types.
-These problems are especially pronounced for nested data.
+degradation) and missing functionalities for those data types.
 
-We'd like to improve the handling of extension types throughout the library,
+We'd like to improve the handling of extension types throughout the library
 making their behavior more consistent with the handling of NumPy arrays. We'll
-do this by cleaning up Pandas' internals and adding new methods to the extension
-array interface. The goal is to better enable new extension types (such as a
-native string data type, see below) and to ensure that the existing types such
-as the integer data type with missing values support can be a full replacement
-for the default NumPy-based type.
+do this by cleaning up Pandas' internals and expanding the extension array
+interface. The goal is to better enable new extension types (such as a native
+string data type, see below) and to ensure that the existing types such as the
+integer data type with missing values support can be a full replacement for the
+default NumPy-based type.
 
 To measure the outcome of this item, we expect that the number of open
 [extension-array-related issues][ea-issues] to decline, and that the number of
@@ -79,13 +79,12 @@ The current implementation has two primary drawbacks:
    efficient. The NumPy memory model isn't well-suited to variable-width text
    data.
 
-To solve the first issue, we'll implement a new extension type,
-`StringArray`, specifically for text data. With `StringArray`, users can write
-clearer and more correct code when working with text data. This sub-item will be
-considered complete when a `StringArray` is available in a released version of
-Pandas.
+To solve the first issue we'll implement a new extension type, `StringArray`,
+specific to text data. With `StringArray` users can write clearer and more
+correct code when working with text data. This sub-item will be considered
+complete when a `StringArray` is available in a released version of Pandas.
 
-To solve the second issue (memory efficiency), we'll change `StringArray` to be
+To solve the second issue (memory efficiency) we'll change `StringArray` to be
 backed by an alternative in-memory array, rather than a NumPy array of Python
 strings. The alternative backing array will give better memory-efficiency,
 letting users work with larger datasets in memory and enable faster throughput
@@ -98,7 +97,7 @@ achieve this goal.
 
 ## Documentation Validation
 
-To improve the quality and consistency of Pandas documentation, we've developed
+To improve the quality and consistency of Pandas' documentation, we've developed
 tooling to check docstrings in a variety of ways. Every docstring is checked for
 
 1. Consistency: Ensuring that every docstring has the same components
@@ -131,8 +130,8 @@ achieve this goal.
 ## Performance Monitoring
 
 Pandas uses airspeed velocity[^asv] to monitor for performance regressions.
-airspeed velocity itself is a fabulous tool, but requires some additional work
-to be integrated into an open source project's workflow.
+Airspeed velocity is a fabulous tool but requires additional work to be
+integrated into an open source project's workflow.
 
 The asv-runner[^asv-runner] GitHub organization, currently made up of Pandas
 maintainers, provides tools built on top of airspeed velocity. We have a
@@ -220,7 +219,7 @@ The second component, updating the string extension type to use an alternative
 backing array library, will be a larger effort. First, we'll need to decide
 which array library to use ([Apache Arrow][arrow],
 [awkward-array][awkward-array], or some other library). Second, we'll need to do
-the actual implementation of `StringArray` to be backed by the alternative
+the actual implementation changing `StringArray` to be backed by the alternative
 array. Finally, because we aren't using Python strings anymore, we may need to
 re-implement basic string algorithms (like `str.upper`) to work on the
 alternative array library's memory.
@@ -252,7 +251,7 @@ We expect this to take about ½ FTE.
 This item does not require deep familiarity with Pandas.
 
 We will prioritize reporting performance regressions. When a performance
-regression is detected, we will use the GitHub API to notify the project which
+regression is detected we will use the GitHub API to notify the project which
 commit caused the slowdown[^asv-watcher].
 
 Meanwhile, we'd also like to improve the stability and reliability of the
