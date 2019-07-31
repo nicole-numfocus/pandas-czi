@@ -12,7 +12,7 @@ abstract: |
   Scientific Python Ecosystem, providing the most widely-used data structures
   for heterogenous, tabular data, and is the most-used Python tag on
   StackOverflow (@robinson_2019). Pandas documentation averages over 1,000,000
-  unique vistors per month. Speficially within the biomedical and life sciences,
+  unique visitors per month. Specifically within the biomedical and life sciences,
   pandas is used by directly by researchers and by libraries[^libraries].
   
   The proposal requests funding for library maintenance, improving the
