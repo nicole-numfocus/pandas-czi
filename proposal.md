@@ -185,6 +185,8 @@ workflow. We hope to draw from pandas' [current pool of
 maintainers][pandas-maintainers] and contributors, or pandas (unofficial) [mentorship
 program][mentoring] to find people with the necessary skills and experience.
 
+We expect this to take about 1 FTE over the course of the grant.
+
 ## Extension Types
 
 This work item will require some familiarity with pandas' internals. We plan to
@@ -200,6 +202,8 @@ array interface. We will fix those issues, and every extension type, including
 Finally, we will improve test coverage for extension arrays for nested data.
 This will uncover issues that are specific to having "scalar" values of a dtype
 be collections themselves.
+
+We expect this work to take about ¼ FTE.
 
 ## Native String Data Type
 
@@ -220,6 +224,8 @@ array. Finally, because we aren't using Python strings anymore, we may need to
 re-implement basic string algorithms (like `str.upper`) to work on the
 alternative array library's memory.
 
+We expect this work to take about ½	FTE.
+
 ## Documentation Validation
 
 This item may be implemented by anyone familiar with using pandas. Experience
@@ -237,6 +243,8 @@ validation being part of numpydoc[^numpydoc-scope].
 
 The implementer will need to coordinate with many new contributors to pandas,
 who often start contributing by improving pandas' documentation.
+
+We expect this to take about ½ FTE.
 
 ## Performance Monitoring
 
@@ -256,6 +264,8 @@ runs will require writing a GitHub bot to respond to requests. This will require
 communication with the benchmark machine to ensure that a maintainer-requested
 benchmark does not run a the same time as another benchmark run (either
 maintainer-requested or scheduler nightly run).
+
+We expect this to take ¼ FTE.
 
 # Existing Support
 
