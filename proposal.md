@@ -110,6 +110,9 @@ When a user submits a Pull Request to pandas, their changes to the documentation
 are automatically checked by our continuous integration system. Any issues are
 logged with informative error messages describing the issue with the change.
 
+We would like to improve the quality of this tooling by fixing bugs, catching
+more issues, improving feedback, and improving the documentation of the tooling.
+
 Like many other projects, pandas uses the
 [numpydoc](https://numpydoc.readthedocs.io/en/latest/) standard for writing
 docstrings. With the collaboration of the numpydoc maintainers, we'd like to
@@ -117,7 +120,7 @@ move the project-agnostic tooling we've written to a package outside of pandas,
 which any numpydoc-using project can benefit from.
 
 If possible, we'd like this project to be undertaken by a member of an
-unrepresented minority, with mentorship provided by the pandas maintaiers. This
+unrepresented minority, with mentorship provided by the pandas maintainers. This
 project primarily requires experience with *using* pandas, NumPy, and related
 libraries, rather that deep knowledge of pandas' internals.
 
@@ -174,6 +177,8 @@ Maintainers funded by this grant would be expected to
    clearly described and scoped.
 6. Review and address performance regressions.
 7. Engage in discussions on the pandas mailing list.
+8. Mentoring contributors, especially from those from underrepresented groups,
+   who would like to become maintainers.
 
 This item requires some familiarity with pandas codebase, community, and
 workflow. We hope to draw from pandas' [current pool of
