@@ -58,7 +58,7 @@ do this by cleaning up pandas' internals and adding new methods to the extension
 array interface. The goal is to better enable new extension types (such as a
 native string data type, see below) and to ensure that the existing types such
 as the integer data type with missing values support can be a full replacement
-for the default numpy-based type.
+for the default NumPy-based type.
 
 To measure the outcome of this item, we expect that the number of open
 [extension-array-related issues][ea-issues] to decline, and that the number of
@@ -130,13 +130,13 @@ achieve this goal.
 ## Performance Monitoring
 
 Pandas uses [airspeed velocity][^asv] to monitor for performance regressions.
-ASV itself is a fabulous tool, but requires some additional work to be
-integrated into an open source project's workflow.
+airspeed velocity itself is a fabulous tool, but requires some additional work
+to be integrated into an open source project's workflow.
 
 The [asv-runner][^asv-runner] GitHub organization, currently made up of pandas
-maintainers, provides tools built on top of ASV. We have a physical machine for
-running a number of project's benchmarks and tools managing the benchmark runs
-and reporting on results.
+maintainers, provides tools built on top of airspeed velocity. We have a
+physical machine for running a number of project's benchmarks and tools managing
+the benchmark runs and reporting on results.
 
 We'd like to fund improvements and maintenance of these tools to
 
@@ -146,9 +146,9 @@ We'd like to fund improvements and maintenance of these tools to
   when a maintainer has free time. This occasionally results in days or weeks of
   downtime.
 * Tune the system to improve benchmark stability
-* Build a GitHub bot to request ASV runs *before* a Pull Request is merged. The
-  benchmarks are too expensive to run as part of every commit. Running on-demand
-  from a maintainer provides a nice balance.
+* Build a GitHub bot to request airspeed velocity runs *before* a Pull Request
+  is merged. The benchmarks are too expensive to run as part of every commit.
+  Running on-demand from a maintainer provides a nice balance.
 * Pay for hosting a dedicated benchmark server. A maintainer's basement isn't
   the most stable environment for a machine.
 
@@ -192,7 +192,7 @@ more deeply integrate extension arrays into pandas, so that all columns in a
 `DataFrame` are backed by an `ExtensionArray`. This will simplify pandas
 internals and algorithms, improving the maintainability of the project.
 
-Additionally, changing every column to be backed by an `ExtensionARray` will
+Additionally, changing every column to be backed by an `ExtensionArray` will
 surface bugs in pandas internals, algorithms, and shortcomings of the extension
 array interface. We will fix those issues, and every extension type, including
 3rd-party implementations, will benefit.
