@@ -36,7 +36,7 @@ We also expect to increase the growth-rate of new contributors to the project.
 As maintenance time cleans up the issue backlog, the average quality of the
 outstanding open issues will rise. This will lower the barrier to contributing.
 
-See [Library Maintenance](#library-maintenance-1) for how we plan to achieve this
+See [Library Maintenance](#library-maintenance-1) for how we will achieve this
 goal.
 
 ## Extension Types
@@ -64,7 +64,7 @@ To measure the outcome of this item, we expect that the number of open
 [extension-array-related issues][ea-issues] to decline, and that the number of
 special cases in [pandas' internals][blocks] to be minimized.
 
-See [Extension Types](#extension-types-1) for how we plan to achieve this goal.
+See [Extension Types](#extension-types-1) for how we will achieve this goal.
 
 ## Native String Data Type
 
@@ -78,11 +78,11 @@ The current implementation has two primary drawbacks:
    efficient. The NumPy memory model isn't well-suited to variable-width text
    data.
 
-To solve the first issue, we'll implement a new [extension
-type][extension-type], `StringArray`, specifically for text data. With
-`StringArray`, users will get more clearer and predictable behavior when working
-with text data. This sub-item will be considered complete when a `StringArray`
-is available in pandas.
+To solve the first issue, we'll implement a new [extension type][^ea-interface],
+`StringArray`, specifically for text data. With `StringArray`, users can write
+clearer and more correct code when working with text data. This sub-item will be
+considered complete when a `StringArray` is available in a released version of
+pandas.
 
 To solve the second issue (memory efficiency), we'll change `StringArray` to be
 backed by an alternative in-memory array, rather than a NumPy array of Python
@@ -91,6 +91,9 @@ letting users work with larger datasets in memory and enable faster throughput
 in string operations. This sub-item will be considered complete when
 `StringArray` is backed by an alternative array, and (at least the most common)
 string operations can be applied to that array.
+
+See [Native String Data Type](#native-string-data-type-1) for how we plan to
+achieve this goal.
 
 ## Documentation Validation
 
@@ -117,6 +120,9 @@ If possible, we'd like this project to be undertaken by a member of an
 unrepresented minority, with mentorship provided by the pandas maintaiers. This
 project primarily requires experience with *using* pandas, NumPy, and related
 libraries, rather that deep knowledge of pandas' internals.
+
+See [Documentation Validation](#documentation-validation-1) for how we plan to
+achieve this goal.
 
 ## Performance Monitoring
 
@@ -148,6 +154,9 @@ foundational libraries in the Scientific Python Ecosystem including xarray,
 Dask, scikit-image, scikit-learn, and PyMC3. Each of these projects would
 benefit from improvements made to the tooling.
 
+See [Performance Monitoring](#performance-monitoring-1) for how we plan to
+achieve this goal.
+
 # Work plan
 
 ## Library Maintenance
@@ -173,12 +182,19 @@ program][mentoring] to find people with the necessary skills and experience.
 
 ## Extension Types
 
-This work item will require some familiarity with pandas' internals. We plan
-to more deeply integrate extension arrays into pandas, so that all columns in a
-`DataFrame` are backed by an `ExtensionArray`. This will lead to simplification
-in pandas' internals, but will likely surface issues in pandas' algorithms and
-shortcomings of the extension array interface. This item covers fixing those
-issues and proposing modifications to the extension array interface.
+This work item will require some familiarity with pandas' internals. We plan to
+more deeply integrate extension arrays into pandas, so that all columns in a
+`DataFrame` are backed by an `ExtensionArray`. This will simplify pandas
+internals and algorithms, improving the maintainability of the project.
+
+Additionally, changing every column to be backed by an `ExtensionARray` will
+surface bugs in pandas internals, algorithms, and shortcomings of the extension
+array interface. We will fix those issues, and every extension type, including
+3rd-party implementations, will benefit.
+
+Finally, we will improve test coverage for extension arrays for nested data.
+This will uncover issues that are specific to having "scalar" values of a dtype
+be collections themselves.
 
 ## Native String Data Type
 
@@ -256,14 +272,13 @@ documents](https://github.com/pandas-dev/pandas-governance/blob/master/people.md
 
 [arrow]: https://arrow.apache.org
 [string ops]: https://pandas.pydata.org/pandas-docs/stable/reference/series.html#api-series-str
-[ea interface]: https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extension-types
+[^ea-interface]: https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extension-types
 [fletcher]: https://fletcher.readthedocs.io/en/latest/
 [ea-issues]: https://github.com/pandas-dev/pandas/issues?q=is%3Aopen+is%3Aissue+label%3AExtensionArray
 [blocks]: https://github.com/pandas-dev/pandas/blob/master/pandas/core/internals/blocks.py
 [pandas-maintainers]: https://github.com/pandas-dev/pandas-governance/blob/master/people.md
 [mentoring]: https://github.com/python-sprints/pandas-mentoring/
 [awkward-array]: https://github.com/scikit-hep/awkward-array
-[^arrow-scope]: See <https://issues.apache.org/jira/browse/ARROW-555>.
 [^numpydoc-scope]: See <https://github.com/numpy/numpydoc/issues/213>.
 [^asv]: See <https://asv.readthedocs.io/en/stable/>.
 [^asv-runner]: <https://github.com/asv-runner>
@@ -271,5 +286,3 @@ documents](https://github.com/pandas-dev/pandas-governance/blob/master/people.md
     proof of concept.
 [^hosting]: The basement of a house with a three-year-old who enjoys pushing
     glowing buttons is not a safe environment for a server.
-[extension-type]: https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extension-types
-
