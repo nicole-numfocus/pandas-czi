@@ -41,7 +41,7 @@ goal.
 
 ## Extension Types
 
-Pandas Extension Array interface enables working with arrays of data that aren't
+Pandas Extension Array interface[^ea-interface] enables working with arrays of data that aren't
 limited to NumPy's data types and in-memory data model. Pandas provides several
 extension types (categorical, datetime with timezone, interval), and third-party
 libraries implementing the interface can define their own custom data types.
@@ -78,7 +78,7 @@ The current implementation has two primary drawbacks:
    efficient. The NumPy memory model isn't well-suited to variable-width text
    data.
 
-To solve the first issue, we'll implement a new [extension type][^ea-interface],
+To solve the first issue, we'll implement a new extension type,
 `StringArray`, specifically for text data. With `StringArray`, users can write
 clearer and more correct code when working with text data. This sub-item will be
 considered complete when a `StringArray` is available in a released version of
@@ -129,11 +129,11 @@ achieve this goal.
 
 ## Performance Monitoring
 
-Pandas uses [airspeed velocity][^asv] to monitor for performance regressions.
+Pandas uses airspeed velocity[^asv] to monitor for performance regressions.
 airspeed velocity itself is a fabulous tool, but requires some additional work
 to be integrated into an open source project's workflow.
 
-The [asv-runner][^asv-runner] GitHub organization, currently made up of pandas
+The asv-runner[^asv-runner] GitHub organization, currently made up of pandas
 maintainers, provides tools built on top of airspeed velocity. We have a
 physical machine for running a number of project's benchmarks and tools managing
 the benchmark runs and reporting on results.
@@ -203,7 +203,7 @@ Finally, we will improve test coverage for extension arrays for nested data.
 This will uncover issues that are specific to having "scalar" values of a dtype
 be collections themselves.
 
-We expect this work to take about ¼ FTE.
+We expect this work to take about 1/4 FTE.
 
 ## Native String Data Type
 
@@ -287,17 +287,24 @@ documents](https://github.com/pandas-dev/pandas-governance/blob/master/people.md
 
 [arrow]: https://arrow.apache.org
 [string ops]: https://pandas.pydata.org/pandas-docs/stable/reference/series.html#api-series-str
-[^ea-interface]: https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extension-types
 [fletcher]: https://fletcher.readthedocs.io/en/latest/
 [ea-issues]: https://github.com/pandas-dev/pandas/issues?q=is%3Aopen+is%3Aissue+label%3AExtensionArray
 [blocks]: https://github.com/pandas-dev/pandas/blob/master/pandas/core/internals/blocks.py
 [pandas-maintainers]: https://github.com/pandas-dev/pandas-governance/blob/master/people.md
 [mentoring]: https://github.com/python-sprints/pandas-mentoring/
 [awkward-array]: https://github.com/scikit-hep/awkward-array
+
+
+[^ea-interface]: <https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extension-types>.
+
 [^numpydoc-scope]: See <https://github.com/numpy/numpydoc/issues/213>.
+
 [^asv]: See <https://asv.readthedocs.io/en/stable/>.
-[^asv-runner]: <https://github.com/asv-runner>
+
+[^asv-runner]: See <https://github.com/asv-runner>.
+
 [^asv-watcher]: <https://github.com/asv-runner/asv-watcher> has a promising
     proof of concept.
+
 [^hosting]: The basement of a house with a three-year-old who enjoys pushing
     glowing buttons is not a safe environment for a server.
