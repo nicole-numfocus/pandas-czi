@@ -1,5 +1,5 @@
 ---
-title: Pandas
+title: Ensuring the continued growth of Pandas
 bibliography: biblio.bib
 link-citations: true
 urlcolor: cyan
@@ -29,12 +29,12 @@ Pandas is a large library with many users. We have many open issues (about
 time consuming, but important to the project. We would like to fund time
 dedicated specifically to maintenance.
 
-Dedicated maintenance time, including periodic reviews of the open issue
-backlog, will result in higher average quality of the open issues. We hope this
-will increase the growth rate of new contributors, as the barrier to
-contributing is lowered.
+We expect to see the number of open issues and pull requests decline while
+maintainers are dedicating additional time to maintenance.
 
-We expect to see the number of open issues and pull requests decline. 
+We also expect to increase the growth-rate of new contributors to the project.
+As maintenance time cleans up the issue backlog, the average quality of the
+outstanding open issues will rise. This will lower the barrier to contributing.
 
 See [Library Maintenance](#library-maintenance-1) for how we plan to achieve this
 goal.
@@ -72,27 +72,25 @@ Currently, pandas stores text data in an `object`-dtype NumPy array.
 The current implementation has two primary drawbacks:
 
 1. `object`-dtype is not specific to strings: any Python object can be stored in
-   an `object`-dtype array, not just strings.
+   an `object`-dtype array, not just strings, leading to confusion and bugs when
+   doing dtype-specific operations.
 2. Storing an array of Python strings as an `object`-dtype array is not memory
-   efficient. The NumPy memory model isn't especially well-suited to variable
-   width text data.
+   efficient. The NumPy memory model isn't well-suited to variable-width text
+   data.
 
-To solve the first issue, we would like to implement a new [extension
-type](https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extension-types)
-for string data. This will initially be opt-in, with users explicitly requesting
-`dtype="string"`. Over time, we'd like to provide a migration path to users so
-that the string extension type is used by default for text data.
+To solve the first issue, we'll implement a new [extension
+type][extension-type], `StringArray`, specifically for text data. With
+`StringArray`, users will get more clearer and predictable behavior when working
+with text data. This sub-item will be considered complete when a `StringArray`
+is available in pandas.
 
-To solve the second issue (memory efficiency), we'll explore alternative
-in-memory array libraries (for example, Apache Arrow). Using a library whose
-data model is better-suited to text data should result in lower memory usage
-when loaded into pandas. We also expect that operations (for example
-[`Series.str.upper`](https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.str.upper.html))
-will be faster.
-
-The second issue with pandas' current string implementation will be considered
-complete when a `string`-dtype array is no longer backed by a NumPy array of
-Python string objects.
+To solve the second issue (memory efficiency), we'll change `StringArray` to be
+backed by an alternative in-memory array, rather than a NumPy array of Python
+strings. The alternative backing array will give better memory-efficiency,
+letting users work with larger datasets in memory and enable faster throughput
+in string operations. This sub-item will be considered complete when
+`StringArray` is backed by an alternative array, and (at least the most common)
+string operations can be applied to that array.
 
 ## Documentation Validation
 
@@ -106,8 +104,8 @@ tooling to check docstrings in a variety of ways. Every docstring is checked for
 3. Correctness: Ensuring that the examples run correctly.
 
 When a user submits a Pull Request to pandas, their changes to the documentation
-are automatically checked and informative error messages notify them of any
-issues.
+are automatically checked by our continuous integration system. Any issues are
+logged with informative error messages describing the issue with the change.
 
 Like many other projects, pandas uses the
 [numpydoc](https://numpydoc.readthedocs.io/en/latest/) standard for writing
@@ -118,28 +116,27 @@ which any numpydoc-using project can benefit from.
 If possible, we'd like this project to be undertaken by a member of an
 unrepresented minority, with mentorship provided by the pandas maintaiers. This
 project primarily requires experience with *using* pandas, NumPy, and related
-libraries, rather that deep knowledge of pandas' internals. Pandas has a diverse
-community, just not at the maintainer level (yet).
+libraries, rather that deep knowledge of pandas' internals.
 
 ## Performance Monitoring
 
-Pandas uses [airspeed velocity](https://asv.readthedocs.io/en/stable/) to
-monitor for performance regressions. ASV itself is a fabulous tool, but requires
-some additional work to be integrated into an open source project's workflow.
+Pandas uses [airspeed velocity][^asv] to monitor for performance regressions.
+ASV itself is a fabulous tool, but requires some additional work to be
+integrated into an open source project's workflow.
 
-The [asv-runner](https://github.com/asv-runner) GitHub organization, currently
-made up of pandas maintainers, provides tools built on top of ASV. We have a
-physical machine for running a number of project's benchmarks and tools managing
-the benchmark runs and reporting on results.
+The [asv-runner][^asv-runner] GitHub organization, currently made up of pandas
+maintainers, provides tools built on top of ASV. We have a physical machine for
+running a number of project's benchmarks and tools managing the benchmark runs
+and reporting on results.
 
 We'd like to fund improvements and maintenance of these tools to
 
+* Report performance regressions to a project rather than relying on maintainers
+  manually checking for regressions.
 * Be more reliable. Currently, they're maintained on the nights and weekends
   when a maintainer has free time. This occasionally results in days or weeks of
   downtime.
 * Tune the system to improve benchmark stability
-* Report performance regressions to a project rather than relying on maintainers
-  manually checking for regressions.
 * Build a GitHub bot to request ASV runs *before* a Pull Request is merged. The
   benchmarks are too expensive to run as part of every commit. Running on-demand
   from a maintainer provides a nice balance.
@@ -176,77 +173,68 @@ program][mentoring] to find people with the necessary skills and experience.
 
 ## Extension Types
 
-This item is somewhat open-ended. New issues will be discovered as extension
-arrays are adopted by the pandas community. That said, there are a few concrete
-starting points.
+This work item will require some familiarity with pandas' internals. We plan
+to more deeply integrate extension arrays into pandas, so that all columns in a
+`DataFrame` are backed by an `ExtensionArray`. This will lead to simplification
+in pandas' internals, but will likely surface issues in pandas' algorithms and
+shortcomings of the extension array interface. This item covers fixing those
+issues and proposing modifications to the extension array interface.
 
 ## Native String Data Type
 
-The two aspects of this item (`string` extension type and an alternative
-in-memory array library) can largely proceed in parallel.
+The two aspects of this item (a new `StringArray` and an alternative array
+library backing `StringArray`) can largely proceed in parallel.
 
-We will implement `StringDtype`, a new  `ExtensionDtype`, whose scalar type is
-`str`. The array for that type will be `StingArray`, a new `ExtensionArray`.
-Because the first aspect of this item is just providing a new user-API for the
-same functionality, this extension type will be relatively straightforward to
-implement. It can closely follow the `PandasArray` implementation, but limit the
-allowed data types to just `object`. The constructor and mutation methods may
-limit the allowed scalar values to just be instances of `str`.
+We will implement a new extension type dedicated to string data. Initially, this
+implementation will still be backed by an object-dtype NumPy array of Python
+strings. This work will be mostly self-contained, requiring few changes to the
+broader pandas library.
 
-Initially, `StringArray` need not have any API-breaking changes. We will make it
-opt-in
-
-```python
->>> s = pd.Series(['a', 'b', 'c'], dtype='string')
->>> s
-0    a
-1    b
-2    c
-dtype: string
->>> s.array
-StringArray(['a', 'b', 'c'])
-```
-
-Over time, we might consider deprecating the current behavior of inferring
-an untyped array of strings to be `object` dtype, in favor of `StringDtype`.
-
-The second component, updating the string extension array to use an alternative
-in-memory array library, will be a larger effort. First, we'll need to decide
-which array library to use (Apache Arrow, [awkward-array][awkward-array], or
-some other library). Second, we'll need to do the actual implementation.
-
-If Apache Arrow is chosen, many string algorithms will need
-to be implemented, preferable in the Apache Arrow C++ library so that other
-languages binding to the C++ library benefit as well. This is within scope for
-Apache Arrow[^arrow-scope].
+The second component, updating the string extension type to use an alternative
+backing array library, will be a larger effort. First, we'll need to decide
+which array library to use ([Apache Arrow][arrow],
+[awkward-array][awkward-array], or some other library). Second, we'll need to do
+the actual implementation of `StringArray` to be backed by the alternative
+array. Finally, because we aren't using Python strings anymore, we may need to
+re-implement basic string algorithms (like `str.upper`) to work on the
+alternative array library's memory.
 
 ## Documentation Validation
 
 This item may be implemented by anyone familiar with using pandas. Experience
 with the pandas codebase is not required.
 
-The implementer will need to coordinate with many new contributors, as
-documentation improvements are the most common type of contribution by
-first-time contributors.
-
 The implementer will start by improving our existing tooling within the pandas
-repository, to clean up the rough edges of the current system.
+repository, to clean up the rough edges of the current system before exposing it
+to other packages. Some aspects of the tooling will have made assumptions that
+only work for pandas and will need to be made project-agnostic.
 
 We will collaborate with the numpydoc maintainers and other numpydoc users to
 find a suitable home for the checks (within numpydoc itself, or a separate
-package).
+package). The numpydoc maintainers have expressed interest in docstring
+validation being part of numpydoc[^numpydoc-scope].
 
-The numpydoc maintainers have expressed interest in docstring validation
-being part of numpydoc: https://github.com/numpy/numpydoc/issues/213.
+The implementer will need to coordinate with many new contributors to pandas,
+who often start contributing by improving pandas' documentation.
 
 ## Performance Monitoring
 
-This item does not require familiarity with pandas.
+This item does not require deep familiarity with pandas.
 
-Work can largely be broken into two buckets: maintenance and feature
-development. These two buckets can proceed in parallel.
+We will prioritize reporting performance regressions. When a performance
+regression is detected, we will use the GitHub API to notify the project which
+commit caused the slowdown[^asv-watcher].
 
-For developing a GitHub bot, we'll Heroku to respond to GitHub events.
+Meanwhile, we'd also like to improve the stability and reliability of the
+nightly benchmark runner. We need monitoring tools for when the Airflow service
+running the benchmarks goes down, and possibly alternative hosting for the
+physical machine[^hosting].
+
+Finally, implementing the feature to let GitHub maintainers request benchmark
+runs will require writing a GitHub bot to respond to requests. This will require
+communication with the benchmark machine to ensure that a maintainer-requested
+benchmark does not run a the same time as another benchmark run (either
+maintainer-requested or scheduler nightly run).
 
 # Existing Support
 
@@ -275,4 +263,13 @@ documents](https://github.com/pandas-dev/pandas-governance/blob/master/people.md
 [pandas-maintainers]: https://github.com/pandas-dev/pandas-governance/blob/master/people.md
 [mentoring]: https://github.com/python-sprints/pandas-mentoring/
 [awkward-array]: https://github.com/scikit-hep/awkward-array
-[^arrow-scope]: See <https://issues.apache.org/jira/browse/ARROW-555>
+[^arrow-scope]: See <https://issues.apache.org/jira/browse/ARROW-555>.
+[^numpydoc-scope]: See <https://github.com/numpy/numpydoc/issues/213>.
+[^asv]: See <https://asv.readthedocs.io/en/stable/>.
+[^asv-runner]: <https://github.com/asv-runner>
+[^asv-watcher]: <https://github.com/asv-runner/asv-watcher> has a promising
+    proof of concept.
+[^hosting]: The basement of a house with a three-year-old who enjoys pushing
+    glowing buttons is not a safe environment for a server.
+[extension-type]: https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extension-types
+
