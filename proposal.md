@@ -15,7 +15,7 @@ abstract: |
   unique visitors per month. Specifically within the biomedical and life sciences,
   pandas is used by directly by researchers and by libraries[^libraries].
   
-  The proposal requests funding for library maintenance, improving the
+  The grant will fund library maintenance, improvements to the
   extension array interface, a native extension type for text data,
   and improvements to Pandas documentation and performance monitoring tooling.
 
