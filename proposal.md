@@ -11,7 +11,7 @@ abstract: |
   easy-to-use data structures. Pandas is a foundational library in the
   Scientific Python Ecosystem, providing the most widely-used data structures
   for heterogenous, tabular data, and is the most-used Python tag on
-  StackOverflow (@robinson_2019). Pandas documentation averages over 1,000,000
+  StackOverflow (@robinson_2019). Pandas' documentation averages over 1,000,000
   unique visitors per month. Specifically within the biomedical and life sciences,
   pandas is used by directly by researchers and by libraries[^libraries].
   
@@ -43,7 +43,7 @@ goal.
 ## Extension Types
 
 Pandas Extension Array interface[^ea-interface] enables working with arrays of
-data that aren't limited to NumPy's data types and in-memory data model. Pandas
+data that aren't limited to NumPy's data types and in-memory data format. Pandas
 provides several extension types (categorical, datetime with timezone,
 interval), and third-party libraries implementing the interface can define their
 own custom data types.
@@ -58,8 +58,7 @@ making their behavior more consistent with the handling of NumPy arrays. We'll
 do this by cleaning up Pandas' internals and expanding the extension array
 interface. The goal is to better enable new extension types (such as a native
 string data type, see below) and to ensure that the existing types such as the
-integer data type with missing values support can be a full replacement for the
-default NumPy-based type.
+nullable integer type an be a full replacement for the default NumPy-based type.
 
 To measure the outcome of this item, we expect that the number of open
 [extension-array-related issues][ea-issues] to decline, and that the number of
@@ -69,15 +68,14 @@ See [Extension Types](#extension-types-1) for how we will achieve this goal.
 
 ## Native String Data Type
 
-Currently, Pandas stores text data in an `object`-dtype NumPy array.
-The current implementation has two primary drawbacks:
+Currently, Pandas stores text data in an `object`-dtype NumPy array where each
+element is a Python `str`. The current implementation has two primary drawbacks:
 
-1. `object`-dtype is not specific to strings: any Python object can be stored in
-   an `object`-dtype array, not just strings, leading to confusion and bugs when
-   doing dtype-specific operations.
-2. Storing an array of Python strings as an `object`-dtype array is not memory
-   efficient. The NumPy memory model isn't well-suited to variable-width text
-   data.
+1. `object`-dtype is not specific to strings. Any Python object can be stored in
+   an `object`-dtype array, including a mixture of strings and other types,
+   leading to confusion and bugs when doing dtype-specific operations.
+2. Storing an array of Python strings is not memory efficient. The NumPy memory
+   model isn't well-suited to variable-width text data.
 
 To solve the first issue we'll implement a new extension type, `StringArray`,
 specific to text data. With `StringArray` users can write clearer and more
@@ -86,11 +84,11 @@ complete when a `StringArray` is available in a released version of Pandas.
 
 To solve the second issue (memory efficiency) we'll change `StringArray` to be
 backed by an alternative in-memory array, rather than a NumPy array of Python
-strings. The alternative backing array will give better memory-efficiency,
-letting users work with larger datasets in memory and enable faster throughput
-in string operations. This sub-item will be considered complete when
-`StringArray` is backed by an alternative array, and (at least the most common)
-string operations can be applied to that array.
+strings. The alternative backing array will be memory-efficient, letting users
+work with larger datasets in memory and enabling higher throughput in string
+operations. This sub-item will be considered complete when `StringArray` is
+backed by an alternative array, and (at least the most common) string operations
+can be applied to that array.
 
 See [Native String Data Type](#native-string-data-type-1) for how we plan to
 achieve this goal.
@@ -113,16 +111,18 @@ logged with informative error messages describing the issue with the change.
 We would like to improve the quality of this tooling by fixing bugs, catching
 more issues, improving feedback, and improving the documentation of the tooling.
 
-Like many other projects, Pandas uses the
-[numpydoc](https://numpydoc.readthedocs.io/en/latest/) standard for writing
-docstrings. With the collaboration of the numpydoc maintainers, we'd like to
-move the project-agnostic tooling we've written to a package outside of Pandas,
-which any numpydoc-using project can benefit from.
+Like many other projects, Pandas uses the numpydoc[^numpydoc] standard for
+writing docstrings. With the collaboration of the numpydoc maintainers, we'd
+like to move the project-agnostic tooling we've written to a package outside of
+Pandas, which any numpydoc-using project can benefit from.
 
 If possible, we'd like this project to be undertaken by a member of an
 unrepresented minority, with mentorship provided by the Pandas maintainers. This
 project primarily requires experience with *using* Pandas, NumPy, and related
-libraries, rather that deep knowledge of Pandas' internals.
+libraries, rather that deep knowledge of Pandas' internals. None of the current
+pandas maintainers are from an underrepresented group, and this project provides
+an excellent way to gradually become familiar with pandas while performing
+high-impact work.
 
 See [Documentation Validation](#documentation-validation-1) for how we plan to
 achieve this goal.
@@ -181,9 +181,10 @@ Maintainers funded by this grant would be expected to
    who would like to become maintainers.
 
 This item requires some familiarity with Pandas' codebase, community, and
-workflow. We hope to draw from Pandas' [current pool of
-maintainers][pandas-maintainers] and contributors, or Pandas' (unofficial) [mentorship
-program][mentoring] to find people with the necessary skills and experience.
+workflow. We hope to draw from Pandas' current pool of
+maintainers[^pandas-maintainers] and contributors, or Pandas' (unofficial)
+mentorship program[^mentoring] to find people with the necessary skills and
+experience.
 
 We expect this to take about 1 FTE over the course of the grant.
 
@@ -290,14 +291,17 @@ documents](https://github.com/pandas-dev/pandas-governance/blob/master/people.md
 [fletcher]: https://fletcher.readthedocs.io/en/latest/
 [ea-issues]: https://github.com/pandas-dev/pandas/issues?q=is%3Aopen+is%3Aissue+label%3AExtensionArray
 [blocks]: https://github.com/pandas-dev/pandas/blob/master/pandas/core/internals/blocks.py
-[pandas-maintainers]: https://github.com/pandas-dev/pandas-governance/blob/master/people.md
-[mentoring]: https://github.com/python-sprints/pandas-mentoring/
 [awkward-array]: https://github.com/scikit-hep/awkward-array
 
+[^pandas-maintainers]: An up to date list is available at <https://github.com/pandas-dev/pandas-governance/blob/master/people.md>.
+
+[^mentoring]: See <https://github.com/python-sprints/pandas-mentoring/>.
 
 [^ea-interface]: <https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extension-types>.
 
 [^numpydoc-scope]: See <https://github.com/numpy/numpydoc/issues/213>.
+
+[^numpydoc]: See <https://numpydoc.readthedocs.io/en/latest>.
 
 [^asv]: See <https://asv.readthedocs.io/en/stable/>.
 
