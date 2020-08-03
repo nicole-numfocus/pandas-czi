@@ -44,10 +44,32 @@ through his budget and will spend the remaining time implementing more kernels. 
 of Arrow 1.0, we can provide a wrapper in pandas. That work has started and should finish by
 the end of September.
 
-
 ## 4. Proposal Purpose: (255 characters)
 
+We aim to ensure the continued health of the pandas library by dedicating
+resources to specifically to maintenance and implementing consistent missing
+value handling.
+
 ## 6. Abstract (250 words)
+
+This proposal seeks funding to help with the maintenance of pandas, a Python
+library providing high-performance, easy-to-use data structures. pandas'
+popularity continues to grow, and that popularity is reflected in the increasing
+number of issues and pull requests opened on pandas' GitHub repository. We hope
+to use the funding to ensure the continued health of the pandas project through
+two main avenues.
+
+First, we'd fund pandas maintainers to do the day-to-day work of maintaining a
+large project like pandas. This would include triaging issues, reviewing pull
+requests, maintaining release infrastructure, community building, and
+periodically cleaning up the issue tracker.
+
+Second, we'd work to improve missing data handling within pandas. pandas'
+current handling of missing data is inconsistent across data types, resulting in
+confusing behavior for users and additional maintenance burden to handle the
+various cases. By implementing consisting missing data handling for all data
+types we hope to reduce the number of special cases within pandas, giving a
+simpler and easier to use library.
 
 ## 7. Work Plan (750 words**
 
