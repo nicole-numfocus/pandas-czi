@@ -6,7 +6,7 @@ urlcolor: cyan
 numbersections: true
 autoidentifiers: true
 authors:
-  - Joris van den Bossche
+  - Joris Van den Bossche
   - Tom Augspurger
 abstract: |
   ...
@@ -54,6 +54,54 @@ the end of September.
 **Maintenance**
 
 **Nullable Data Types**
+
+In pandas 1.0, experimental "nullable" data types were introduced: the nullable
+integer, string and boolean data types using the new `pd.NA` value to represent
+scalar missing values. The goal of those nullable data types is to provide
+consistent missing value handling accross the data types (with a behaviour that
+deviates from `np.nan` which is historically being used as missing value
+indicator, but is limited to float and object data types).
+
+Those nullable data types are experimental and currently opt-in (the user
+explicitly needs to use them). They are implemented based on the pandas'
+["Extension Array interface"](https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extension-types),
+which enables working with arrays of data that aren't limited to NumPy's data
+types and in-memory data format. The current nullable data types included in
+pandas are implemented as "masked arrays" (using one numpy array for the actual
+data and one for a validity mask, instead of a single numpy array).
+
+Long term, we want to expand this consistent missing value handling to other
+data types (i.e. float, categorical, etc, and potentially also datetime-related
+data types), and we want to make those nullable data types the default data
+types.
+
+[long term, we want to provide consistent missing value handling as the default user experience]
+
+To this end, we need to provide a path forward to make those the default in a
+future version of pandas. Further work is needed to ensure the nullable data
+types are a full replacement for the current data types, covering all pandas
+operations and methods. This will require both improvements to the general
+ExtensionArray mechanism as specific enhancements to the nullable data types /
+masked arrays.
+
+Deliverables / work items:
+
+- Provide a mechanism to easily opt-in to use the nullable data types across the board.
+- General improvements to the Extension Array interface:
+  - Enable using extension arrays for the Index
+  - Better support and customization of construction and casting operations (`astype()`)
+  - Remaining numerical operations (e.g. `round`, `count`, cumulative methods, numpy protocols, ...)
+- Specific improvements to the masked array implementation and algorithm support of the nullable data types:
+  - Investigate ways to optimize the storage (optional masks, bitmasks)
+  - Support masked arrays directly in more algorithms
+- Expand nullable support to new data types (pending discussions on which data types to support).
+
+The general improvements to the ExtensionArray interface will also benefit other
+projects making use of this interface (e.g. pint-pandas, awkward-array,
+GeoPandas, etc).
+
+At some point make those the default. Initially provide a way to enable them.
+Goal of this item is to ensure the full pandas API works with those dtypes
 
 ## 8. Milestones and Deliverables (500 words)
 
