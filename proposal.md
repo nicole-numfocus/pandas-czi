@@ -71,9 +71,26 @@ various cases. By implementing consisting missing data handling for all data
 types we hope to reduce the number of special cases within pandas, giving a
 simpler and easier to use library.
 
-## 7. Work Plan (750 words**
+## 7. Work Plan (750 words)
 
 **Maintenance**
+
+Maintainers funded by this grant would be expected to
+
+1. Promptly triage newly opened issues.
+2. Promptly review new pull requests.
+3. Ensure conversations on open issues are progressing and not waiting on maintainer feedback.
+4. Ensure that Pull Requests are not going stale waiting for maintainer feedback or contributor responses to feedback.
+5. Periodically review the issue backlog to find and close issues that are duplicates or no longer relevant. We should ensure that open issues are clearly described and scoped.
+6. Review and address performance regressions.
+7. Engage in discussions on the Pandas mailing list.
+8. Mentor contributors, especially from those from underrepresented groups, who would like to become maintainers.
+
+Over the past year, we've had success with maintainers coordinating pandas' large pool of willing volunteers to chip away at large projects. For example, we coordinated dozens of contributors to update pandas' codebase to use f-strings in https://github.com/pandas-dev/pandas/issues/29547.
+
+Maintainers have also spent time going through pandas' issue backlog to find issues that are fixed but not yet closed. We then comment that this could use a test, and a community member will often come along with a Pull Request adding a test to ensure that the behavior is tested and close the issue (https://github.com/pandas-dev/pandas/issues/28397#issuecomment-623863221). This is a great way for new contributors to join the project, and increases the quality of pandas' issue backlog by closing out fixed items.
+
+This item requires some familiarity with Pandas' codebase, community, and workflow. We hope to draw from Pandas' current pool of maintainers[^pandas-maintainers] and [triagers][^triagers] to find people with the necessary skills and experience. We expect this to take about 1 FTE over the course of the grant.
 
 **Nullable Data Types**
 
@@ -129,4 +146,15 @@ Goal of this item is to ensure the full pandas API works with those dtypes
 
 **Maintenance**
 
+Maintenance is a never-ending, hard-to-quantify task. That said, we can 
+
+* Metrics: Reduced open issue backlog[1]. Increase growth rate of new contributors.
+* Milestones: N/A
+* Timeline: Duration of the grant.
+
+
+
 **Nullable Data Types**
+
+
+[^triagers]: https://github.com/orgs/pandas-dev/teams/pandas-triage/members
