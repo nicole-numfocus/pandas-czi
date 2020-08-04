@@ -196,4 +196,29 @@ As these nullable types are experimental and opt-in, each pandas release can
 incrementally include those new features. When the project is ready for pandas
 2.0, we have choice to make them the default for all users.
 
+## Landscape Analysis
+
+Several other Python libraries provide a dataframe implementation that overlaps
+with what pandas provides. Of these, pandas is one of the oldest and most
+popular.
+
+* cudf: Like pandas, but on the GPU
+* dask.dataframe: Parallel / distributed dataframes. Uses pandas internally.
+* vaex: scalable / parallel / larger-than-memory dataframe
+* modin: Like pandas, uses Ray for parallelism
+* koalas / pyspark: dataframes, executes on the JVM using Spark
+
+Outside of Python, most languages used for scientific computing will have one or
+more dataframe implementations.
+
+Pandas builds on top of other libraries like NumPy, pytz, and python-dateutil.
+We have optional features that build on libraries like Apache Arrow, PyTables,
+xarray, SQLAlchemy, fsspec, and others.
+
+Other libraries build on top of pandas, for example statsmodels, featuretools,
+altair, seaborn, xarray, geopandas, Dask, and others. See
+https://pandas.pydata.org/docs/ecosystem.html for more.
+
+## 11. Diversity, Equity, and Inclusion Statement
+
 [^triagers]: https://github.com/orgs/pandas-dev/teams/pandas-triage/members
