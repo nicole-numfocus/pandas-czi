@@ -6,10 +6,11 @@ For ease of reference, we've expressed the work items in terms of FTEs
 (full-time equivalents) assuming that one FTE costs roughly $100,000. Our
 indirect costs would be 10% or $25,000, for our fiscal sponsor, NumFOCUS.
 
-Work Item                | Number of FTEs
------------------------- | --------------
-Maintenance              | 1.25
-Nullable Types           | 1
+Work Item                | Number of FTEs | Amount
+------------------------ | -------------- | ------
+Maintenance              | 1.25           | $125,000
+Nullable Types           | 1              | $100,000
+Indirect Costs           | -              |  $25,000
 
 The maintenance work item is similar to a work item from round one. We've been
 able to spend the maintenance budget paying 4-5 experienced pandas maintainers

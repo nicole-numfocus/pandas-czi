@@ -221,4 +221,23 @@ https://pandas.pydata.org/docs/ecosystem.html for more.
 
 ## 11. Diversity, Equity, and Inclusion Statement
 
+The pandas project and community recognizes that a diverse and inclusive
+community is essential to the success of the project.
+
+We expect that all members of the communities, including veteran maintainers,
+adhere to and demonstrate the values laid out in our [Code of Conduct](https://github.com/pandas-dev/pandas-governance/blob/master/code-of-conduct.md).
+
+We recognize that the limited diversity in the current maintainers does not
+reflect the diversity of pandas' users, much less the general population. Simply
+saying that "all contributions are welcome" is not enough to overcome the
+entrenched biases in open source that put hurdles in the way of contributing. So
+while contributions *are* always welcome, we place particular import on
+encouraging contributions from individuals from underrepresented communities.
+
+We applaud and love working with groups like
+[pandanistas](https://www.pandanistas.org) We thank them not just for their
+contributions, but for their mentorship and for publicizing pandas as a great
+project for women and other under-represented groups in technology to contribute
+to.
+
 [^triagers]: https://github.com/orgs/pandas-dev/teams/pandas-triage/members
