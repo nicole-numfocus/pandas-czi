@@ -169,20 +169,24 @@ span the duration of the grant.
 
 **Nullable Data Types**
 
-Deliverables / work items:
+Ensuring the nullable data types are a full replacement for the current data
+types will require both improvements to the general ExtensionArray mechanism as
+specific enhancements to the nullable data types. The following specific work
+items have been identified (with the expected completion time from the start of
+the funding period):
 
-- Provide a mechanism to easily opt-in to use the nullable data types across the board.
+- Provide a mechanism to easily opt-in to use the nullable data types across the [Month 3].
 - General improvements to the Extension Array interface:
-  - Enable using extension arrays for the Index
-  - Better support and customization of construction and casting operations (`astype()`)
-  - Remaining numerical operations (e.g. `round`, `count`, cumulative methods, numpy protocols, ...)
+  - Enable using extension arrays for the Index [Month 3]
+  - Better support and customization of construction and casting operations (`astype()`) [Month 6]
+  - Remaining numerical operations (e.g. `round`, `count`, cumulative methods, numpy protocols, ...) [Month 12]
 - Specific improvements to the masked array implementation (these nullable
   arrays are composed of an array of values and a second `mask` array indicating
   whether each value is valid or `NA`) and algorithm support of the nullable
   data types:
-  - Investigate ways to optimize the storage (optional masks, bitmasks)
-  - Support masked arrays directly in more algorithms
-- Expand nullable support to new data types (pending discussions on which data types to support).
+  - Investigate ways to optimize the storage (optional masks, bitmasks) [Month 12]
+  - Support masked arrays directly in more algorithms [Month 6]
+- Expand nullable support to new data types (pending discussions on which data types to support) [Month 12].
 
 The general improvements to the ExtensionArray interface will also benefit other
 projects making use of this interface (e.g. pint-pandas, awkward-array,
