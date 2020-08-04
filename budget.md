@@ -1,7 +1,6 @@
 # Budget
 
-pandas has requested funding for $250,000. This will to software development
-time.
+pandas has requested funding for $250,000. This will fund software development.
 
 For ease of reference, we've expressed the work items in terms of FTEs
 (full-time equivalents) assuming that one FTE costs roughly $100,000. Our
