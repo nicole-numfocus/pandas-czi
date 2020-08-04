@@ -127,25 +127,47 @@ In pandas 1.0, experimental "nullable" data types were introduced: the nullable
 integer, string and boolean data types use the new `pandas.NA` value to
 represent scalar missing values. These nullable data types provide consistent
 missing value handling accross the data types (with a behaviour that deviates
-from `np.nan` which is historically being used as missing value indicator, but
-is limited to float and object data types).
+from `np.nan` which historically was used as missing value indicator, but is
+limited to float and object data types).
 
-Those nullable data types are experimental and currently opt-in (the user
-explicitly needs to use them). They are implemented based on the pandas'
-["Extension Array interface"](https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extension-types),
-which enables working with arrays of data that aren't limited to NumPy's data
-types and in-memory data format.
+We'd like to expand the nullable data type paradigm to more data types (e.g.
+float, categorical, and possibly date-like data types). We think that the
+nullable data types are more natural, powerful, and easier to use than pandas'
+current handling of missing values. Additionally, in a world where nullable
+types are consistently used for all data types, pandas will be able to
+dramatically simplify its internal dtype casting logic that is currently
+necessary. This will help make pandas a more maintainable project going forward.
 
-Long-term, we want to expand this consistent missing value handling to other
-data types (i.e. float, categorical, etc, and potentially also datetime-related
-data types), and we want to make those nullable data types the default data
-types.
+The recently added nullable data types are currently experimental and opt-in
+(the user must explicitly request the nullable versions if they wish to use
+them). While we'd like the nullable versions to be stable and the default, we
+must first update many of pandas' internal methods to understand these nullable
+types. We've made some progress on this with our current EOSS funding, and would
+like to continue that work.
 
-To this end, we need to provide a path forward to make those the default in a
-future version of pandas. Further work is needed to ensure the nullable data
-types are a full replacement for the current data types, covering all pandas
-operations and methods. This will require both improvements to the general
-ExtensionArray mechanism as specific enhancements to the nullable data types.
+Once the nullable types are working well with the rest of pandas, we'll add an
+option for users to globally opt-in to getting nullable types by default (e.g.
+from `read_csv`, when constructing a `DataFrame` from Python lists, etc.).
+
+When it's time, we can make using nullable types the default. We'll provide users
+with a path to migrate to the new behavior with an option to opt-out, so that users will
+get them automatically.
+
+## 8. Milestones and Deliverables (500 words)
+
+**Maintenance**
+
+Maintenance is a never-ending, hard-to-quantify task. That said, we can attempt to quantify
+it in a few ways.
+
+* Fewer open issues in the backlog (3,500 at the time of writing) / more issues closed (160 over the past month)
+* Fewer open pull requests (164 at the time of writing) / more merged pull requests (172 over the past month)
+* Fewer open regressions (61 at the time of writing, soon after major release)
+
+This component does not have any specific milestones; the work is ongoing. The timeline spans
+span the duration of the grant.
+
+**Nullable Data Types**
 
 Deliverables / work items:
 
@@ -166,25 +188,8 @@ The general improvements to the ExtensionArray interface will also benefit other
 projects making use of this interface (e.g. pint-pandas, awkward-array,
 GeoPandas, etc).
 
-Once we have the nullable types working with all of pandas' operations and methods,
-we can provide an option to opt into them by default. When the project is ready
-for pandas 2.0, we have choice to make them the default for all users.
-
-## 8. Milestones and Deliverables (500 words)
-
-**Maintenance**
-
-Maintenance is a never-ending, hard-to-quantify task. That said, we can attempt to quantify
-it in a few ways.
-
-* Fewer open issues in the backlog (3,500 at the time of writing) / more issues closed (160 over the past month)
-* Fewer open pull requests (164 at the time of writing) / more merged pull requests (172 over the past month)
-* Fewer open regressions (61 at the time of writing, soon after major release)
-
-This component does not have any specific milestones; the work is ongoing. The timeline spans
-span the duration of the grant.
-
-**Nullable Data Types**
-
+As these nullable types are experimental and opt-in, each pandas release can
+incrementally include those new features. When the project is ready for pandas
+2.0, we have choice to make them the default for all users.
 
 [^triagers]: https://github.com/orgs/pandas-dev/teams/pandas-triage/members
