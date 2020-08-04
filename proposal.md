@@ -64,11 +64,15 @@ value handling.
 ## 6. Abstract (250 words)
 
 This proposal seeks funding to help with the maintenance of pandas, a Python
-library providing high-performance, easy-to-use data structures. pandas'
-popularity continues to grow, and that popularity is reflected in the increasing
-number of issues and pull requests opened on pandas' GitHub repository. We hope
-to use the funding to ensure the continued health of the pandas project through
-two main avenues.
+library providing high-performance, easy-to-use data structures. pandas is a
+foundational library in the Scientific Python Ecosystem, providing the most
+widely-used data structures for heterogenous, tabular data, and is the most-used
+Python tag on StackOverflow. pandas' documentation averages over 1,000,000 unique
+visitors per month. Specifically within the biomedical and life sciences, Pandas
+is used directly by researchers and by libraries.
+
+We hope to use the funding to ensure the continued health of the pandas project through
+two main avenues:
 
 First, we'd fund pandas maintainers to do the day-to-day work of maintaining a
 large project like pandas. This would include triaging issues, reviewing pull
@@ -118,8 +122,12 @@ quality of pandas' issue backlog by closing out fixed items.
 This item requires some familiarity with Pandas' codebase, community, and
 workflow. We hope to draw from Pandas' current pool of
 maintainers[^pandas-maintainers] and [triagers][^triagers] to find people with
-the necessary skills and experience. We expect this to take about 1 FTE over the
-course of the grant.
+the necessary skills and experience.
+
+We could spend many, many hours on maintenance, but we are requesting funding
+for about 1.5 FTEs over the course of the grant. Because most maintenance work
+can be done in small pieces, we'd happily accept less here if pandas is funded
+but not for the full amount. Any amount helps.
 
 **Nullable Data Types**
 
@@ -152,6 +160,9 @@ from `read_csv`, when constructing a `DataFrame` from Python lists, etc.).
 When it's time, we can make using nullable types the default. We'll provide users
 with a path to migrate to the new behavior with an option to opt-out, so that users will
 get them automatically.
+
+This is a large amount of work that can be done in smaller, incremental steps. We expect
+this work to take about 1 FTE over the course of the grant.
 
 ## 8. Milestones and Deliverables (500 words)
 
@@ -188,8 +199,8 @@ The general improvements to the ExtensionArray interface will also benefit other
 projects making use of this interface (e.g. pint-pandas, awkward-array,
 GeoPandas, etc).
 
-As these nullable types are experimental and opt-in, each pandas release can
-incrementally include those new features. When the project is ready for pandas
-2.0, we have choice to make them the default for all users.
+As these nullable types are experimental and opt-in, each minor pandas release
+can incrementally include those new features. When the project is ready for
+pandas 2.0, we have choice to make them the default for all users.
 
 [^triagers]: https://github.com/orgs/pandas-dev/teams/pandas-triage/members
