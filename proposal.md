@@ -14,9 +14,11 @@ abstract: |
 
 ## 3a. Progress Report (250 words)
 
+Our previous proposal had three sections: maintenance, extension types, and a native string dtype.
+
 **Maintenance**
 
-Our funded maintenance work has primarily focused on
+Our maintenance work has primarily focused on
 
 1. Organizing pandas' community of volunteers
 2. Ensuring software quality by quickly responding to high-priority issues (e.g. https://github.com/pandas-dev/pandas/issues/35517#issuecomment-667668033)
@@ -30,11 +32,12 @@ of 676 contributors, 457 of which were first-time contributors.
 
 **Extension Types**
 
-We've continued to expand the extension array interface work better with the rest of pandas.
+We've continued to expand the extension array interface to work better with the
+rest of pandas. With funding from CZI's EOSS, we've added
 
-* Interface for concatenating Extension types: https://github.com/pandas-dev/pandas/pull/33607
-* Allow masked extension arrays in pandas' algorithms (https://github.com/pandas-dev/pandas/pull/33064, https://github.com/pandas-dev/pandas/pull/30982)
-* Allow extension arrays in the index (in progress: https://github.com/pandas-dev/pandas/issues/22861)
+* An interface for concatenating Extension types: https://github.com/pandas-dev/pandas/pull/33607
+* Support for masked extension arrays in pandas' algorithms (https://github.com/pandas-dev/pandas/pull/33064, https://github.com/pandas-dev/pandas/pull/30982)
+* Support for extension arrays in the index (in progress: https://github.com/pandas-dev/pandas/issues/22861)
 
 **Native String Dtype**
 
@@ -43,6 +46,11 @@ Several kernels (e.g. ``str.lower``) have been implemented. Maarten is about 30%
 through his budget and will spend the remaining time implementing more kernels. With the release
 of Arrow 1.0, we can provide a wrapper in pandas. That work has started and should finish by
 the end of September.
+
+* https://issues.apache.org/jira/browse/ARROW-555
+* https://issues.apache.org/jira/browse/ARROW-9133
+* https://github.com/pandas-dev/pandas/issues/35169
+
 
 ## 4. Proposal Purpose: (255 characters)
 
@@ -79,49 +87,62 @@ Maintainers funded by this grant would be expected to
 
 1. Promptly triage newly opened issues.
 2. Promptly review new pull requests.
-3. Ensure conversations on open issues are progressing and not waiting on maintainer feedback.
-4. Ensure that Pull Requests are not going stale waiting for maintainer feedback or contributor responses to feedback.
-5. Periodically review the issue backlog to find and close issues that are duplicates or no longer relevant. We should ensure that open issues are clearly described and scoped.
+3. Ensure conversations on open issues are progressing and not waiting on
+   maintainer feedback.
+4. Ensure that Pull Requests are not going stale waiting for maintainer feedback
+   or contributor responses to feedback.
+5. Periodically review the issue backlog to find and close issues that are
+   duplicates or no longer relevant. We should ensure that open issues are
+   clearly described and scoped.
 6. Review and address performance regressions.
 7. Engage in discussions on the Pandas mailing list.
-8. Mentor contributors, especially from those from underrepresented groups, who would like to become maintainers.
+8. Mentor contributors, especially from those from underrepresented groups, who
+   would like to become maintainers.
 
-Over the past year, we've had success with maintainers coordinating pandas' large pool of willing volunteers to chip away at large projects. For example, we coordinated dozens of contributors to update pandas' codebase to use f-strings in https://github.com/pandas-dev/pandas/issues/29547.
+Over the past year, we've had success with maintainers coordinating pandas'
+large pool of willing volunteers to chip away at large projects. For example, we
+coordinated dozens of contributors to update pandas' codebase to use f-strings
+in https://github.com/pandas-dev/pandas/issues/29547.
 
-Maintainers have also spent time going through pandas' issue backlog to find issues that are fixed but not yet closed. We then comment that this could use a test, and a community member will often come along with a Pull Request adding a test to ensure that the behavior is tested and close the issue (https://github.com/pandas-dev/pandas/issues/28397#issuecomment-623863221). This is a great way for new contributors to join the project, and increases the quality of pandas' issue backlog by closing out fixed items.
+Maintainers have also spent time going through pandas' issue backlog to find
+issues that are fixed but not yet closed. We then comment that this could use a
+test, and a community member will often come along with a Pull Request adding a
+test to ensure that the behavior is tested and close the issue
+(https://github.com/pandas-dev/pandas/issues/28397#issuecomment-623863221). This
+is a great way for new contributors to join the project, and increases the
+quality of pandas' issue backlog by closing out fixed items.
 
-This item requires some familiarity with Pandas' codebase, community, and workflow. We hope to draw from Pandas' current pool of maintainers[^pandas-maintainers] and [triagers][^triagers] to find people with the necessary skills and experience. We expect this to take about 1 FTE over the course of the grant.
+This item requires some familiarity with Pandas' codebase, community, and
+workflow. We hope to draw from Pandas' current pool of
+maintainers[^pandas-maintainers] and [triagers][^triagers] to find people with
+the necessary skills and experience. We expect this to take about 1 FTE over the
+course of the grant.
 
 **Nullable Data Types**
 
 In pandas 1.0, experimental "nullable" data types were introduced: the nullable
-integer, string and boolean data types using the new `pd.NA` value to represent
-scalar missing values. The goal of those nullable data types is to provide
-consistent missing value handling accross the data types (with a behaviour that
-deviates from `np.nan` which is historically being used as missing value
-indicator, but is limited to float and object data types).
+integer, string and boolean data types use the new `pandas.NA` value to
+represent scalar missing values. These nullable data types provide consistent
+missing value handling accross the data types (with a behaviour that deviates
+from `np.nan` which is historically being used as missing value indicator, but
+is limited to float and object data types).
 
 Those nullable data types are experimental and currently opt-in (the user
 explicitly needs to use them). They are implemented based on the pandas'
 ["Extension Array interface"](https://pandas.pydata.org/pandas-docs/stable/development/extending.html#extension-types),
 which enables working with arrays of data that aren't limited to NumPy's data
-types and in-memory data format. The current nullable data types included in
-pandas are implemented as "masked arrays" (using one numpy array for the actual
-data and one for a validity mask, instead of a single numpy array).
+types and in-memory data format.
 
-Long term, we want to expand this consistent missing value handling to other
+Long-term, we want to expand this consistent missing value handling to other
 data types (i.e. float, categorical, etc, and potentially also datetime-related
 data types), and we want to make those nullable data types the default data
 types.
-
-[long term, we want to provide consistent missing value handling as the default user experience]
 
 To this end, we need to provide a path forward to make those the default in a
 future version of pandas. Further work is needed to ensure the nullable data
 types are a full replacement for the current data types, covering all pandas
 operations and methods. This will require both improvements to the general
-ExtensionArray mechanism as specific enhancements to the nullable data types /
-masked arrays.
+ExtensionArray mechanism as specific enhancements to the nullable data types.
 
 Deliverables / work items:
 
@@ -130,7 +151,10 @@ Deliverables / work items:
   - Enable using extension arrays for the Index
   - Better support and customization of construction and casting operations (`astype()`)
   - Remaining numerical operations (e.g. `round`, `count`, cumulative methods, numpy protocols, ...)
-- Specific improvements to the masked array implementation and algorithm support of the nullable data types:
+- Specific improvements to the masked array implementation (these nullable
+  arrays are composed of an array of values and a second `mask` array indicating
+  whether each value is valid or `NA`) and algorithm support of the nullable
+  data types:
   - Investigate ways to optimize the storage (optional masks, bitmasks)
   - Support masked arrays directly in more algorithms
 - Expand nullable support to new data types (pending discussions on which data types to support).
@@ -139,8 +163,9 @@ The general improvements to the ExtensionArray interface will also benefit other
 projects making use of this interface (e.g. pint-pandas, awkward-array,
 GeoPandas, etc).
 
-At some point make those the default. Initially provide a way to enable them.
-Goal of this item is to ensure the full pandas API works with those dtypes
+Once we have the nullable types working with all of pandas' operations and methods,
+we can provide an option to opt into them by default. When the project is ready
+for pandas 2.0, we have choice to make them the default for all users.
 
 ## 8. Milestones and Deliverables (500 words)
 
