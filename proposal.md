@@ -30,6 +30,9 @@ closed issues, labeling them as "needs tests", and having a volunteer translate
 the issue into a pull request with a unit test. Our last two releases had a total
 of 676 contributors, 457 of which were first-time contributors.
 
+We've used 77% of our hours allocated to maintenance. We will have no trouble
+spending the remaining hours by the end of the grant.
+
 **Extension Types**
 
 We've continued to expand the extension array interface to work better with the
@@ -38,6 +41,8 @@ rest of pandas. With funding from CZI's EOSS, we've added
 * An interface for concatenating Extension types: https://github.com/pandas-dev/pandas/pull/33607
 * Support for masked extension arrays in pandas' algorithms (https://github.com/pandas-dev/pandas/pull/33064, https://github.com/pandas-dev/pandas/pull/30982)
 * Support for extension arrays in the index (in progress: https://github.com/pandas-dev/pandas/issues/22861)
+
+We've spent 93% of our hours allocated to this task.
 
 **Native String Dtype**
 
@@ -51,6 +56,10 @@ the end of September.
 * https://issues.apache.org/jira/browse/ARROW-9133
 * https://github.com/pandas-dev/pandas/issues/35169
 
+We've spent about 30% of our hours allocated to this task. This number is low because
+Maarten was not able to start on this task until a month ago, and the work in pandas was
+blocked by the release of Arrow 1.0. We'll quickly exhaust the remaining hours now that
+Maarten is free and Arrow 1.0 is out.
 
 ## 4. Proposal Purpose: (255 characters)
 
