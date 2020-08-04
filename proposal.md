@@ -171,13 +171,15 @@ for pandas 2.0, we have choice to make them the default for all users.
 
 **Maintenance**
 
-Maintenance is a never-ending, hard-to-quantify task. That said, we can 
+Maintenance is a never-ending, hard-to-quantify task. That said, we can attempt to quantify
+it in a few ways.
 
-* Metrics: Reduced open issue backlog[1]. Increase growth rate of new contributors.
-* Milestones: N/A
-* Timeline: Duration of the grant.
+* Fewer open issues in the backlog (3,500 at the time of writing) / more issues closed (160 over the past month)
+* Fewer open pull requests (164 at the time of writing) / more merged pull requests (172 over the past month)
+* Fewer open regressions (61 at the time of writing, soon after major release)
 
-
+This component does not have any specific milestones; the work is ongoing. The timeline spans
+span the duration of the grant.
 
 **Nullable Data Types**
 
